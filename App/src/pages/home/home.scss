@@ -1,3 +1,201 @@
-page-home {
+page-home, .body {
+  padding: 0;
+  margin: 0;
+  background-color: #F5CA8C;
+}
 
+.appBody {
+  padding: 0;
+  margin: 0;
+  background-color: #F5CA8C;
+}
+
+.noMargin{
+  margin: 0;
+}
+
+.noPadding{
+  padding: 0;
+}
+
+.center{
+  margin: 0 auto;
+  text-align: center;
+}
+
+.right{
+  margin: 0 0 0 auto;
+  text-align: right;
+}
+
+.block{
+  display: inline-block;
+}
+
+.verticalAlignFix{
+  vertical-align: middle;
+  height: auto;
+}
+
+#landingHome{
+  background-color: #F5CA8C;
+  width: 100vw;
+  height: calc(100vh - 25px);
+  margin: 0 auto;
+}
+
+.logoVector{
+  height: 50vh;
+  margin: 0 auto;
+}
+
+.welcomeText{
+  color: #333;
+  text-align: right;
+  padding: 0 20px;
+}
+
+.landingInput{
+  color: #333;
+  text-align: right;
+  font-size: 120%;
+  background-color: #eee;
+  padding: 0 10px;
+  border-radius: 7px;
+}
+
+.text-input-wp{
+  border: none !important;
+}
+
+.button-md, .button-wp{
+  height: 100% !important;
+  border-radius: 7px;
+}
+
+.fixRow{
+  display: inline !important;
+}
+
+.fixList{
+  background: #eee;
+}
+
+ion-item{
+  background: #f9f9f9 !important;
+}
+
+ion-avatar img{
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.topContainer1{
+  height: 7vh !important;
+  width: 100vw !important;
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  background-color: #F5CA8C;
+  border: none !important;
+}
+
+.topContainer2{
+  height: 14vh !important;
+}
+
+.bottomList{
+  height: 9vh !important;
+  background: #eee !important;
+}
+
+#mainContainer{
+  background-color: #eee;
+  width: 100vw;
+  height: calc(100vh - 25px);
+  margin: 0 auto;
+}
+
+.header{
+  height: 13vh;
+  width: 100vw;
+  background-color: #F5CA8C;
+  border-bottom: 1px solid #c1975d;
+  position: fixed;
+  z-index: 100;
+}
+
+.headerImgLogo{
+  height: 100%;
+  margin: auto 0;
+}
+
+.headerWalletBtn{
+  height: 100%;
+  margin: auto 0;
+}
+
+.headerWalletBtn:hover{
+  cursor: pointer;
+  background: rgba(127, 127, 127, 0.05);
+  border-radius: 100%;
+}
+
+.headerWalletBtn:active{
+  background: rgba(127, 127, 127, 0.1);
+  border-radius: 100%;
+}
+
+.labelTitle{
+  font-size: 250%;
+  color: #333;
+  display: block;
+}
+
+.btnOrder{
+  color: #387ef5;
+  font-size: 100%;
+  font-weight: bold;
+}
+
+.button-clear-ios > span{
+  font-weight: bold;
+}
+
+.footerFix{
+  background-color: #F5CA8C !important;
+  height: 7vh;
+  vertical-align: middle;
+  margin: auto;
+  border-top: 1px solid #c1975d;
+  display: block;
+  position: fixed;
+}
+
+.footerFix > ion-segment{
+  line-height: 7vh;
+  vertical-align: middle;
+}
+
+.footerMenu{
+  height: 7vh;
+  line-height: 7vh;
+  vertical-align: middle;
+  padding: 0 10px;
+}
+
+.footerMenu > ion-col{
+  padding: 0;
+  text-align: center;
+}
+
+.footerMenu > ion-col:hover{
+  cursor: pointer;
+}
+
+.footerMenuActive{
+  background: rgba(193, 151, 93, 0.3);
+  border-bottom: 4px solid #c1975d;
+  //border-top-left-radius: 8px;
+  //border-top-right-radius: 8px;
 }

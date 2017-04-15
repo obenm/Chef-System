@@ -1,14 +1,143 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content class="body" scroll="false" *ngIf="settings.openBill===false">
+  <section id="landingHome" padding>
+    <ion-grid>
+      <ion-row class="center noPadding">
+        <ion-col col-12>
+          <img class="logoVector" src="../../img/iCHEF-Logo.png" />
+        </ion-col>
+      </ion-row>
+      <ion-row class="center">
+        <ion-col col-12>
+          <img src="../../img/iCHEF-texto.png" padding />
+        </ion-col>
+      </ion-row>
+      <ion-row class="right">
+        <ion-col col-12>
+          <h2 class="welcomeText">Welcome!</h2>
+        </ion-col>
+      </ion-row>
+      <ion-row></ion-row>
+      <ion-row class="noPadding noMargin" ng-model="bill">
+        <ion-col col-8>
+          <ion-input class="landingInput" type="text" Placeholder="Access Code: i.e. 232331" autofocus [(ngModel)]="bill.billIdentifier"></ion-input>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button block class="noMargin" [disabled]="!bill.billIdentifier.length" (click)="checkAccessCode()">Enter</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+</ion-content>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content class="appBody" scroll="false" *ngIf="settings.openBill===true">
+  <section id="mainContainer">
+    <ion-grid class="noPadding">
+      <ion-row class="header noPadding noMargin">
+        <ion-col col-8>
+          <img class="headerImgLogo" src="../../img/iCHEF-Logo.png" />
+          <img class="headerImgLogo" src="../../img/iCHEF-texto.png" padding />
+        </ion-col>
+        <ion-col col-4 class="right">
+          <img class="headerWalletBtn" src="../../img/FlatWallet.png" padding (click)="settings.menu='bill'" />
+        </ion-col>
+      </ion-row>
+      <ion-row class="topContainer1"></ion-row>
+      <ion-row class="topContainer2"></ion-row>
+      <ion-row padding>
+        <h1 class="labelTitle">
+          <div *ngIf="settings.menu==='fastFood'"><ion-icon name="md-pizza"></ion-icon> &nbsp; Fast Food</div>
+          <div *ngIf="settings.menu==='drinks'"><ion-icon name="md-wine"></ion-icon> &nbsp; Drinks</div>
+          <div *ngIf="settings.menu==='desserts'"><ion-icon name="md-ice-cream"></ion-icon> &nbsp; Desserts</div>
+          <div *ngIf="settings.menu==='bill'"><ion-icon name="md-pizza"></ion-icon> &nbsp; Bill</div>
+        </h1>
+      </ion-row>
+      <ion-row class="fixRow noPadding noMargin" *ngIf="settings.menu==='fastFood'">
+        <ion-list class="fixList noPadding noMargin">
+          <ion-item-sliding *ngFor="let item of fastfoodItems" #itemSliding>
+            <ion-item>
+              <ion-avatar item-left>
+                <img src="{{item.image}}">
+              </ion-avatar>
+              <h2>{{item.name}}</h2>
+              <p>{{item.description}}</p>
+              <span clear item-right class="btnOrder">$ {{item.price | number : '1.2-2'}}</span>
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="primary" (click)="requestOrder(itemSliding, item)">
+                <ion-icon name="add"></ion-icon> Order
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-row>
+      <ion-row class="fixRow noPadding noMargin" *ngIf="settings.menu==='drinks'">
+        <ion-list class="fixList noPadding noMargin">
+          <ion-item-sliding *ngFor="let item of drinksItems" #itemSliding>
+            <ion-item>
+              <ion-avatar item-left>
+                <img src="{{item.image}}">
+              </ion-avatar>
+              <h2>{{item.name}}</h2>
+              <p>{{item.description}}</p>
+              <span clear item-right class="btnOrder">$ {{item.price | number : '1.2-2'}}</span>
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="primary" (click)="requestOrder(itemSliding, item)">
+                <ion-icon name="add"></ion-icon> Order
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-row>
+      <ion-row class="fixRow noPadding noMargin" *ngIf="settings.menu==='desserts'">
+        <ion-list class="fixList noPadding noMargin">
+          <ion-item-sliding *ngFor="let item of dessertsItems" #itemSliding>
+            <ion-item>
+              <ion-avatar item-left>
+                <img src="{{item.image}}">
+              </ion-avatar>
+              <h2>{{item.name}}</h2>
+              <p>{{item.description}}</p>
+              <span clear item-right class="btnOrder">$ {{item.price | number : '1.2-2'}}</span>
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="primary" (click)="requestOrder(itemSliding, item)">
+                <ion-icon name="add"></ion-icon> Order
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-row>
+      <ion-row class="fixRow noPadding noMargin" *ngIf="settings.menu==='bill'">
+        <ion-list class="fixList noPadding noMargin">
+          <ion-item-sliding *ngFor="let item of drinksItems" #itemSliding>
+            <ion-item>
+              <ion-avatar item-left>
+                <img src="{{item.image}}">
+              </ion-avatar>
+              <h2>{{item.name}}</h2>
+              <p>{{item.description}}</p>
+              <span clear item-right class="btnOrder">$ {{item.price | number : '1.2-2'}}</span>
+            </ion-item>
+            <ion-item-options side="right">
+              <button ion-button color="primary" (click)="requestOrder(itemSliding, item)">
+                <ion-icon name="add"></ion-icon> Order
+              </button>
+            </ion-item-options>
+          </ion-item-sliding>
+        </ion-list>
+      </ion-row>
+      <ion-row class="bottomList"></ion-row>
+    </ion-grid>
+      <ion-footer class="footerFix">
+        <ion-grid class="noPadding">
+          <ion-row class="footerMenu noPadding noMargin">
+            <ion-col col-3 [ngClass]="{'footerMenuActive': settings.menu==='fastFood'}" (click)="settings.menu='fastFood'"><span>Fast Food</span></ion-col>
+            <ion-col col-3 [ngClass]="{'footerMenuActive': settings.menu==='drinks'}" (click)="settings.menu='drinks'"><span>Drinks</span></ion-col>
+            <ion-col col-3 [ngClass]="{'footerMenuActive': settings.menu==='desserts'}" (click)="settings.menu='desserts'"><span>Desserts</span></ion-col>
+            <ion-col col-3 [ngClass]="{'footerMenuActive': settings.menu==='bill'}" (click)="settings.menu='bill'"><span>Bill</span></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-footer>
+  </section>
 </ion-content>
