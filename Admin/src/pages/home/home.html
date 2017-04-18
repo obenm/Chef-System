@@ -1,14 +1,123 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content class="body" scroll="false" *ngIf="settings.openAdmin===false">
+  <section id="landingHome" padding>
+    <ion-grid>
+      <ion-row class="center noPadding">
+        <ion-col col-12>
+          <img class="logoVector" src="../../img/iCHEF-Logo.png" />
+        </ion-col>
+      </ion-row>
+      <ion-row class="center">
+        <ion-col col-12>
+          <img src="../../img/iCHEF-texto.png" padding />
+        </ion-col>
+      </ion-row>
+      <ion-row class="right">
+        <ion-col col-12>
+          <h2 class="welcomeText">Welcome Admin!</h2>
+        </ion-col>
+      </ion-row>
+      <ion-row></ion-row>
+      <ion-row class="noPadding noMargin" ng-model="bill">
+        <ion-col col-8>
+          <ion-input class="landingInput" type="text" Placeholder="Access Code: i.e. 232331" autofocus [(ngModel)]="settings.accesCode"></ion-input>
+        </ion-col>
+        <ion-col col-4>
+          <button ion-button block class="noMargin" [disabled]="!settings.accesCode.length" (click)="checkAccessCode()">Enter</button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+</ion-content>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+<ion-content class="appBody" scroll="false" *ngIf="settings.openAdmin===true">
+  <section id="mainContainer">
+    <ion-grid class="noPadding">
+      <ion-row class="header noPadding noMargin">
+        <ion-col col-8>
+          <img class="headerImgLogo" src="../../img/iCHEF-Logo.png" />
+          <img class="headerImgLogo" src="../../img/iCHEF-texto.png" padding />
+        </ion-col>
+        <ion-col col-4 class="right">
+        </ion-col>
+      </ion-row>
+      <ion-row class="topContainer1"></ion-row>
+      <ion-row class="topContainer2"></ion-row>
+      <ion-row class="noPadding noMargin">
+        <ion-col col-6 padding class="noTopNBottomPadding noTopNBottomMargin">
+          <h1 class="labelTitle">
+            <div padding><ion-icon name="md-pizza"></ion-icon> &nbsp; Bill Orders</div>
+          </h1>
+          <ion-list class="fixList noPadding noMargin">
+            <div *ngFor="let item of items">
+              <ion-item-sliding #itemSliding>
+                <ion-item>
+                  <ion-avatar item-left>
+                    <img src="{{item.image}}">
+                  </ion-avatar>
+                  <h2>{{item.name}}</h2>
+                  <p>{{item.description}}</p>
+                  <span clear item-right class="btnOrder">$ {{item.price | number : '1.2-2'}}</span>
+                </ion-item>
+                <ion-item-options side="right">
+                  <button ion-button color="danger">
+                    <ion-icon name="remove"></ion-icon> Remove
+                  </button>
+                </ion-item-options>
+              </ion-item-sliding>
+            </div>
+          </ion-list>
+        </ion-col>
+        <ion-col col-6 padding class="noTopNBottomPadding noTopNBottomMargin">
+          <h1 class="labelTitle">
+            <div padding><ion-icon name="md-pizza"></ion-icon> &nbsp; Bill Account</div>
+          </h1>
+          <div *ngFor="let item of bills">
+          <ion-list  *ngIf="item.tableNumber==settings.bill" class="fixListRight noPadding noMargin">
+            <ion-item>
+              <div item-left>
+                <h2 item-left>Preferences</h2>
+                <p>Subtotal: $ {{item.toPay.subtotal | number : '1.2-2'}}</p>
+              </div>
+              <div clear item-right class="billacountitems">
+                <p>Add IVA</p>
+                <ion-toggle checked="false" class="noPadding"></ion-toggle>
+              </div>
+              <div clear item-right class="billacountitems">
+                <p>Add Tip</p>
+                <ion-toggle checked="false" class="noPadding" [(ngModel)]="item.tip.controller" (click)="addTip(item)"></ion-toggle>
+              </div>
+            </ion-item>
+            <ion-item>
+              <h2>Order Total:</h2>
+              <p>Total of the Order:</p>
+              <button ion-button item-right class="btnTotal">
+                <span class="zoomIn btnTotalSpan1">$ {{item.toPay.total | number : '1.2-2'}}</span>
+                <span class="zoomIn hidden btnTotalSpan2">Checkout !</span>
+              </button>
+            </ion-item>
+          </ion-list>
+        </div>
+          <h1 class="labelTitle">
+            <div padding><ion-icon name="md-pizza"></ion-icon> &nbsp; Tables Map</div>
+          </h1>
+          <div class="fixTableMap noPadding noMargin">
+            <ion-grid>
+              <ion-row>
+                <ion-col col-3 *ngFor="let item of settings.number" [ngClass]="{'tableMapActive': settings.bill===item}" (click)="settings.bill=item">
+                  <img src="../../img/dining_table.png" />
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+      <ion-footer class="footerFix">
+        <ion-grid class="noPadding">
+          <ion-row class="footerMenu noPadding noMargin">
+            <ion-col col-1 *ngFor="let item of settings.number" [ngClass]="{'footerMenuActive': settings.bill===item}" (click)="settings.bill=item"><span>Mesa {{item}}</span></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-footer>
+  </section>
 </ion-content>

@@ -45,86 +45,31 @@
       <ion-row class="topContainer2"></ion-row>
       <ion-row padding>
         <h1 class="labelTitle">
-          <div *ngIf="settings.menu==='fastFood'"><ion-icon name="md-pizza"></ion-icon> &nbsp; Fast Food</div>
+          <div *ngIf="settings.menu==='fastfood'"><ion-icon name="md-pizza"></ion-icon> &nbsp; Fast Food</div>
           <div *ngIf="settings.menu==='drinks'"><ion-icon name="md-wine"></ion-icon> &nbsp; Drinks</div>
           <div *ngIf="settings.menu==='desserts'"><ion-icon name="md-ice-cream"></ion-icon> &nbsp; Desserts</div>
           <div *ngIf="settings.menu==='bill'"><ion-icon name="md-pizza"></ion-icon> &nbsp; Bill</div>
         </h1>
       </ion-row>
-      <ion-row class="fixRow noPadding noMargin" *ngIf="settings.menu==='fastFood'">
+      <ion-row class="fixRow noPadding noMargin">
         <ion-list class="fixList noPadding noMargin">
-          <ion-item-sliding *ngFor="let item of fastfoodItems" #itemSliding>
-            <ion-item>
-              <ion-avatar item-left>
-                <img src="{{item.image}}">
-              </ion-avatar>
-              <h2>{{item.name}}</h2>
-              <p>{{item.description}}</p>
-              <span clear item-right class="btnOrder">$ {{item.price | number : '1.2-2'}}</span>
-            </ion-item>
-            <ion-item-options side="right">
-              <button ion-button color="primary" (click)="requestOrder(itemSliding, item)">
-                <ion-icon name="add"></ion-icon> Order
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-row>
-      <ion-row class="fixRow noPadding noMargin" *ngIf="settings.menu==='drinks'">
-        <ion-list class="fixList noPadding noMargin">
-          <ion-item-sliding *ngFor="let item of drinksItems" #itemSliding>
-            <ion-item>
-              <ion-avatar item-left>
-                <img src="{{item.image}}">
-              </ion-avatar>
-              <h2>{{item.name}}</h2>
-              <p>{{item.description}}</p>
-              <span clear item-right class="btnOrder">$ {{item.price | number : '1.2-2'}}</span>
-            </ion-item>
-            <ion-item-options side="right">
-              <button ion-button color="primary" (click)="requestOrder(itemSliding, item)">
-                <ion-icon name="add"></ion-icon> Order
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-row>
-      <ion-row class="fixRow noPadding noMargin" *ngIf="settings.menu==='desserts'">
-        <ion-list class="fixList noPadding noMargin">
-          <ion-item-sliding *ngFor="let item of dessertsItems" #itemSliding>
-            <ion-item>
-              <ion-avatar item-left>
-                <img src="{{item.image}}">
-              </ion-avatar>
-              <h2>{{item.name}}</h2>
-              <p>{{item.description}}</p>
-              <span clear item-right class="btnOrder">$ {{item.price | number : '1.2-2'}}</span>
-            </ion-item>
-            <ion-item-options side="right">
-              <button ion-button color="primary" (click)="requestOrder(itemSliding, item)">
-                <ion-icon name="add"></ion-icon> Order
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
-        </ion-list>
-      </ion-row>
-      <ion-row class="fixRow noPadding noMargin" *ngIf="settings.menu==='bill'">
-        <ion-list class="fixList noPadding noMargin">
-          <ion-item-sliding *ngFor="let item of drinksItems" #itemSliding>
-            <ion-item>
-              <ion-avatar item-left>
-                <img src="{{item.image}}">
-              </ion-avatar>
-              <h2>{{item.name}}</h2>
-              <p>{{item.description}}</p>
-              <span clear item-right class="btnOrder">$ {{item.price | number : '1.2-2'}}</span>
-            </ion-item>
-            <ion-item-options side="right">
-              <button ion-button color="primary" (click)="requestOrder(itemSliding, item)">
-                <ion-icon name="add"></ion-icon> Order
-              </button>
-            </ion-item-options>
-          </ion-item-sliding>
+          <div *ngFor="let item of items">
+            <ion-item-sliding *ngIf="item.type===settings.menu" #itemSliding>
+              <ion-item>
+                <ion-avatar item-left>
+                  <img src="{{item.image}}">
+                </ion-avatar>
+                <h2>{{item.name}}</h2>
+                <p>{{item.description}}</p>
+                <span clear item-right class="btnOrder">$ {{item.price | number : '1.2-2'}}</span>
+              </ion-item>
+              <ion-item-options side="right">
+                <button ion-button color="primary" (click)="requestOrder(itemSliding, item)">
+                  <ion-icon name="add"></ion-icon> Order
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </div>
         </ion-list>
       </ion-row>
       <ion-row class="bottomList"></ion-row>
@@ -132,7 +77,7 @@
       <ion-footer class="footerFix">
         <ion-grid class="noPadding">
           <ion-row class="footerMenu noPadding noMargin">
-            <ion-col col-3 [ngClass]="{'footerMenuActive': settings.menu==='fastFood'}" (click)="settings.menu='fastFood'"><span>Fast Food</span></ion-col>
+            <ion-col col-3 [ngClass]="{'footerMenuActive': settings.menu==='fastfood'}" (click)="settings.menu='fastfood'"><span>Fast Food</span></ion-col>
             <ion-col col-3 [ngClass]="{'footerMenuActive': settings.menu==='drinks'}" (click)="settings.menu='drinks'"><span>Drinks</span></ion-col>
             <ion-col col-3 [ngClass]="{'footerMenuActive': settings.menu==='desserts'}" (click)="settings.menu='desserts'"><span>Desserts</span></ion-col>
             <ion-col col-3 [ngClass]="{'footerMenuActive': settings.menu==='bill'}" (click)="settings.menu='bill'"><span>Bill</span></ion-col>
