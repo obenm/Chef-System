@@ -48,7 +48,7 @@
           <div *ngIf="settings.menu==='fastfood'"><ion-icon name="md-pizza"></ion-icon> &nbsp; Fast Food</div>
           <div *ngIf="settings.menu==='drinks'"><ion-icon name="md-wine"></ion-icon> &nbsp; Drinks</div>
           <div *ngIf="settings.menu==='desserts'"><ion-icon name="md-ice-cream"></ion-icon> &nbsp; Desserts</div>
-          <div *ngIf="settings.menu==='bill'"><ion-icon name="md-pizza"></ion-icon> &nbsp; Bill</div>
+          <div *ngIf="settings.menu==='bill'"><ion-icon name="md-cash"></ion-icon> &nbsp; Bill</div>
         </h1>
       </ion-row>
       <ion-row class="fixRow noPadding noMargin">
@@ -69,6 +69,24 @@
                 </button>
               </ion-item-options>
             </ion-item-sliding>
+          </div>
+        </ion-list>
+      </ion-row>
+      <ion-row class="fixRow noPadding noMargin" *ngIf="settings.menu==='bill'">
+        <ion-list class="fixList noPadding noMargin">
+          <div *ngFor="let i of bill.items">
+            <ion-item>
+              <ion-avatar item-left>
+                <img src="{{i.image}}">
+              </ion-avatar>
+              <h2>{{i.name}}</h2>
+              <p>{{i.descriptionToChef}}</p>
+              <span clear item-right class="btnOrder">$ {{i.price | number : '1.2-2'}}</span>
+            </ion-item>
+          </div>
+          <div class="right totalPayLegend" padding>
+            <span>Total to Pay:</span>
+            <h2>$ {{bill.totalPayment | number : '1.2-2'}}</h2>
           </div>
         </ion-list>
       </ion-row>

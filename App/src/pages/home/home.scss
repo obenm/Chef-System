@@ -24,8 +24,8 @@ page-home, .body {
 }
 
 .right{
-  margin: 0 0 0 auto;
-  text-align: right;
+  margin: 0 0 0 auto !important;
+  text-align: right !important;
 }
 
 .block{
@@ -150,6 +150,21 @@ ion-avatar img{
   font-size: 250%;
   color: #333;
   display: block;
+}
+
+.totalPayLegend{
+  background: rgba(0, 0, 0, 0.02);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.totalPayLegend span{
+  display: inline;
+  color: #666;
+}
+
+.totalPayLegend h2{
+  display: inline;
+  color: #333;
 }
 
 .btnOrder{
