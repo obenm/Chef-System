@@ -14,12 +14,12 @@ import { Storage } from '@ionic/storage';
 export class HomePage {
 
   bill = {
-    billIdentifier: "",
+    billIdentifier: "Jajaja",
     totalPayment: 0.00,
     items: [],
   };
   settings = {
-    openBill: true,
+    openBill: false,
     menu: "fastfood",
   }
   items: any[];
@@ -31,6 +31,7 @@ export class HomePage {
 
   ionViewDidLoad(){
     this.getItems();
+    this.checkBeforeLogins();
   }
 
   checkAccessCode(){
@@ -38,6 +39,7 @@ export class HomePage {
       this.presentToast("Access Code Valid \n Redirecting !", "bottom", 1000);
       this.settings.openBill = true;
       this.settings.menu = "fastfood";
+      this.saveLocalSettings();
     }
     else
       this.showBasicAlert("Alert!", "Access Code not Valid !");
@@ -83,18 +85,35 @@ export class HomePage {
           text: 'Order',
           role: 'order',
           handler: data => {
+            let tempItem = JSON.parse(JSON.stringify(item));
             if(data.description != "")
-              item.descriptionToChef = data.description;
-            this.bill.items.push(item);
-            this.calculatePayment(item.price);
-            this.presentToast("Order was placed !", "bottom", 3000);
-            this.saveLocalBill();
+              tempItem.descriptionToChef = data.description;
+            tempItem.productIdentifier = "123456";
+            this.sendOrder(tempItem);
           }
         }
       ]
     });
     alert.present();
     slidingItem.close();
+  }
+
+  sendOrder(item){
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    this.http.post('http://localhost:3000/api/orders/identifier=' + this.bill.billIdentifier, JSON.stringify(item), {headers: headers})
+      .map(res => res.json())
+      .subscribe(
+        response => {
+          this.bill.items.push(item);
+          this.calculatePayment(item.price);
+          this.presentToast("Order was placed !", "bottom", 3000);
+          this.saveLocalBill();
+        },
+        error => {
+          this.presentToast("Occurs an Error When we Try to Place your Order, Please, Try Again :)", "bottom", 3000);
+        }
+      );
   }
 
   calculatePayment(price){
@@ -115,12 +134,40 @@ export class HomePage {
     });
   }
 
+  checkBeforeLogins(){
+    this.storage.ready().then(() => {
+      this.storage.get('settingsBill').then((val) => {
+        if(val != null) {
+          this.settings = JSON.parse(val);
+          this.showLocalBill();
+        }
+        else {
+          this.storage.set('settingsBill', JSON.stringify(this.settings));
+          this.storage.set('bill', null);
+        }
+      });
+    });
+  }
+
+  saveLocalSettings(){
+    this.storage.ready().then(() => {
+      this.storage.set('settingsBill', JSON.stringify(this.settings));
+     });
+  }
+
   saveLocalBill(){
     this.storage.ready().then(() => {
       this.storage.set('bill', JSON.stringify(this.bill));
-       /*storage.get('bill').then((val) => {
-         console.log('Your bill is', val);
-       })*/
+     });
+  }
+
+  showLocalBill(){
+    this.storage.ready().then(() => {
+       this.storage.get('bill').then((val) => {
+         if(val != null) {
+           this.bill = JSON.parse(val);
+         }
+       });
      });
   }
 

@@ -8,7 +8,8 @@ var ordersSchema = new Schema({
   image: { type: String },
   date: {type: Date, default: Date.now},
   wasAddedFlag: {type: Boolean, default: false},
-  billIdentifier: {type: String }
+  billIdentifier: {type: String },
+  productIdentifier: {type: String}
 });
 
 module.exports = mongoose.model('orders', ordersSchema);
