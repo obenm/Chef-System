@@ -50,8 +50,7 @@ var ordersController = require('./database/controllers/controller_orders');
 var orderRoutes = express.Router();
 
 orderRoutes.route('/orders')
-  .get(ordersController.findAllOrders)
-  .post(ordersController.addOrder);
+  .get(ordersController.findAllOrders);
 
 orderRoutes.route('/orders/id=:id')
   .get(ordersController.findOrderById)
@@ -61,8 +60,12 @@ orderRoutes.route('/orders/id=:id')
 orderRoutes.route('/orders/last20')
   .get(ordersController.find20Orders);
 
+orderRoutes.route('/orders/byNoAddedYet')
+  .get(ordersController.findOrdersNoAdded);
+
 orderRoutes.route('/orders/identifier=:billIdentifier')
-  .get(ordersController.findOrderByIdentifier);
+  .get(ordersController.findOrderByIdentifier)
+  .post(ordersController.addOrder);;
 
 app.use('/api', orderRoutes);
 

@@ -44,23 +44,24 @@ exports.findOrderById = function(req, res) {
 exports.addOrder = function(req, res) {
   ordersModel.create({
       name : req.body.name,
-      description : req.body.description,
+      description : req.body.descriptionToChef,
       price : req.body.price,
       image : req.body.image,
-      billIdentifier : req.body.billIdentifier,
+      billIdentifier : req.params.billIdentifier,
+      productIdentifier : req.params.productIdentifier,
   }, function(err, orderResult) {
       if (err)
-          res.send(err);
+          return res.send(500, err.message);
+      res.status(200).jsonp(orderResult);
   });
 };
 
 exports.updateOrder = function(req, res) {
   ordersModel.findById(req.params.id, function(err, orderResult) {
     name: req.body.name;
-    description: req.body.description;
+    description: req.body.descriptionToChef;
     price: req.body.price;
     image: req.body.image;
-    wasAddedFlag: req.body.wasAddedFlag;
     billIdentifier: req.body.billIdentifier;
     ordersModel.save(function(err) {
         if(err)
