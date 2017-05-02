@@ -18,7 +18,7 @@ exports.findBillById = function(req, res) {
 };
 
 exports.findBillByIdentifier = function(req, res) {
-  billsModel.findOne({'billIdentifier': req.params.billIdentifier}, function(err, billsResult) {
+  billsModel.findOne({'billIdentifier': req.params.billIdentifier.toLowerCase()}, function(err, billsResult) {
     if(err)
       return res.send(500, err.message);
     res.status(200).jsonp(billsResult);
@@ -32,9 +32,11 @@ exports.addBill = function(req, res) {
     tips: req.body.tips,
     totalPayment: req.body.totalPayment,
     billIdentifier: req.body.billIdentifier,
-  }, function(err, review) {
+    billStatus: req.body.billStatus,
+  }, function(err, billResult) {
     if (err)
       res.send(err);
+    res.status(200).jsonp(billResult);
   });
 };
 
