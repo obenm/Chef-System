@@ -31,15 +31,39 @@
 
 <ion-content class="appBody" scroll="false" *ngIf="settings.openAdmin===true">
   <section id="mainContainer">
-    <ion-grid class="noPadding">
-      <ion-row class="header noPadding noMargin">
-        <ion-col col-8>
+    <div class="header">
+      <div class="gridHeader">
+        <div class="leftHeader">
           <img class="headerImgLogo" src="../../img/iCHEF-Logo.png" />
           <img class="headerImgLogo" src="../../img/iCHEF-texto.png" padding />
-        </ion-col>
-        <ion-col col-4 class="right">
-        </ion-col>
-      </ion-row>
+        </div>
+        <div class="rightHeader" padding>
+          <div class="fixHeaderBtn">
+          <div class="fixHeaderBtn" style="display: inline" *ngFor="let item of bills">
+            <div class="fixHeaderBtn" *ngIf="item.tableNumber===settings.bill">
+              <button ion-button class="btnOpenBill" block padding *ngIf="item.billIdentifier.length <= 0" (click)="openBill(item)">
+                <div>
+                  <span class="HeaderBtnLine1">OPEN BILL ! &nbsp;</span><br>
+                  <span class="HeaderBtnLine2">For Table # {{item.tableNumber}} &nbsp;</span>
+                </div>
+                <ion-icon class="HeaderBtnIcon" name="md-add-circle"></ion-icon>
+              </button>
+              <button ion-button class="btnCloseBill right" color="danger" block padding *ngIf="item.billIdentifier.length > 0" (click)="closeBill(item)">
+                <div>
+                  <span class="fadeInLeft hidden HeaderBtnLine2hide">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Checkout ! &nbsp;</span>
+                  <span class="fadeInLeft HeaderBtnLine2">Bill Identifier Number: &nbsp;</span><br>
+                  <span class="HeaderBtnLine1">{{item.billIdentifier}} &nbsp;</span>
+                </div>
+                <ion-icon class="HeaderBtnIcon" name="md-close-circle"></ion-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <ion-grid class="noPadding">
       <ion-row class="topContainer1"></ion-row>
       <ion-row class="topContainer2"></ion-row>
       <ion-row class="noPadding noMargin">
@@ -48,8 +72,9 @@
             <div padding><ion-icon name="md-pizza"></ion-icon> &nbsp; Bill Orders</div>
           </h1>
           <ion-list class="fixList noPadding noMargin">
-            <div *ngFor="let item of items">
-              <ion-item-sliding #itemSliding>
+            <div *ngFor="let i of bills">
+            <div *ngIf="i.tableNumber===settings.bill">
+              <ion-item-sliding #itemSliding  *ngFor="let item of i.items">
                 <ion-item>
                   <ion-avatar item-left>
                     <img src="{{item.image}}">
@@ -65,6 +90,7 @@
                 </ion-item-options>
               </ion-item-sliding>
             </div>
+            </div>
           </ion-list>
         </ion-col>
         <ion-col col-6 padding class="noTopNBottomPadding noTopNBottomMargin">
@@ -72,11 +98,11 @@
             <div padding><ion-icon name="md-cash"></ion-icon> &nbsp; Bill Account</div>
           </h1>
           <div *ngFor="let item of bills">
-          <ion-list  *ngIf="item.tableNumber==settings.bill" class="fixListRight noPadding noMargin">
+          <ion-list class="fixListRight noPadding noMargin" *ngIf="item.tableNumber===settings.bill">
             <ion-item>
               <div item-left>
                 <h2 item-left>Preferences</h2>
-                <p>Subtotal: $ {{item.toPay.subtotal | number : '1.2-2'}}</p>
+                <p>Subtotal: $ {{item.subtotal | number : '1.2-2'}}</p>
               </div>
               <div clear item-right class="billacountitems">
                 <p>Add IVA</p>
@@ -84,15 +110,15 @@
               </div>
               <div clear item-right class="billacountitems">
                 <p>Add Tip</p>
-                <ion-toggle checked="false" class="noPadding" [(ngModel)]="item.tip.controller" (click)="addTip(item)"></ion-toggle>
+                <ion-toggle checked="false" class="noPadding" [(ngModel)]="item.tip-controller" (click)="addTip(item)"></ion-toggle>
               </div>
             </ion-item>
             <ion-item>
               <h2>Order Total:</h2>
               <p>Total of the Order:</p>
               <button ion-button item-right class="btnTotal">
-                <span class="zoomIn btnTotalSpan1">$ {{item.toPay.total | number : '1.2-2'}}</span>
-                <span class="zoomIn hidden btnTotalSpan2">Checkout !</span>
+                <span class="fadeInLeft btnTotalSpan1">$ {{item.totalPayment | number : '1.2-2'}}</span>
+                <span class="fadeInLeft hidden btnTotalSpan2">Checkout !</span>
               </button>
             </ion-item>
           </ion-list>
@@ -103,7 +129,7 @@
           <div class="fixTableMap noPadding noMargin">
             <ion-grid>
               <ion-row>
-                <ion-col col-3 *ngFor="let item of settings.number" [ngClass]="{'tableMapActive': settings.bill===item}" (click)="settings.bill=item">
+                <ion-col col-3 *ngFor="let item of settings.number" [ngClass]="{'tableMapActive': settings.bill===item}" (click)="changeBill(item)">
                   <img src="../../img/dining_table.png" />
                 </ion-col>
               </ion-row>

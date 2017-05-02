@@ -35,14 +35,25 @@ export class HomePage {
   }
 
   checkAccessCode(){
-    if(this.bill.billIdentifier.toLowerCase()  == "jajaja"){
-      this.presentToast("Access Code Valid \n Redirecting !", "bottom", 1000);
-      this.settings.openBill = true;
-      this.settings.menu = "fastfood";
-      this.saveLocalSettings();
-    }
-    else
-      this.showBasicAlert("Alert!", "Access Code not Valid !");
+    this.http.get('http://localhost:3000/api/bills/identifier=' + this.bill.billIdentifier.toLowerCase())
+      .map(res => res.json())
+      .subscribe(
+        success => {
+          if(success != null){
+            this.presentToast("Access Code Valid \n Redirecting !", "bottom", 1000);
+            this.settings.openBill = true;
+            this.settings.menu = "fastfood";
+            this.bill.billIdentifier = this.bill.billIdentifier.toLowerCase();
+            this.saveLocalSettings();
+          }
+          else{
+            this.showBasicAlert("Alert!", "Access Code not Valid !");
+          }
+        },
+        error => {
+          this.presentToast("Occurs an Error When you Try to Login, Please, Try Again :)", "Middle", 3000);
+        }
+      );
   }
 
   showBasicAlert(title, subtitle) {
@@ -111,7 +122,7 @@ export class HomePage {
           this.saveLocalBill();
         },
         error => {
-          this.presentToast("Occurs an Error When we Try to Place your Order, Please, Try Again :)", "bottom", 3000);
+            this.presentToast("Occurs an Error When we Try to Place your Order, Please, Try Again :)", "Middle", 3000);
         }
       );
   }

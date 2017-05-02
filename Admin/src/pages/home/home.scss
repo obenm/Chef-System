@@ -23,6 +23,24 @@ page-home, .body {
   text-align: center;
 }
 
+.size100{
+  height: 100%;
+  width: 100%;
+  display: inline-block;
+}
+
+.widthAuto{
+  width: auto !important;
+  display: inline-block;
+}
+
+.height100{
+  height: 100% !important;
+}
+
+.FixHeaderBtnWidth{
+}
+
 .noTopNBottomPadding{
   padding-top: 0 !important;
   padding-bottom: 0 !important;
@@ -187,7 +205,7 @@ ion-avatar img{
 }
 
 .header{
-  height: 13vh;
+  height: 13vh !important;
   width: 100vw;
   background-color: #F5CA8C;
   border-bottom: 1px solid #c1975d;
@@ -264,7 +282,7 @@ ion-avatar img{
   }
 }
 
-.zoomIn{
+.fadeInLeft{
   -webkit-animation-name: fadeInLeft;
   animation-name: fadeInLeft;
   animation-duration: 0.3s;
@@ -342,4 +360,65 @@ ion-avatar img{
 .footerMenuActive{
   background: rgba(193, 151, 93, 0.3);
   border-bottom: 4px solid #c1975d;
+}
+
+.leftHeader{
+  width: calc((100vw / 12) * 9);
+  height: 100%;
+}
+
+.rightHeader{
+  width: calc((100vw / 12) * 3);
+  height: 100%;
+}
+
+.gridHeader{
+  width: 100vw;
+  height: 100%;
+  display: flex;
+}
+
+.fixHeaderBtn{
+  height: 100% !important;
+}
+
+.HeaderBtnLine1{
+  font-size: 170%;
+  display: inline-block;
+}
+
+.HeaderBtnLine2{
+  font-size: 115%;
+  display: inline-block;
+  color: #dedede;
+}
+
+.HeaderBtnLine2hide{
+  font-size: 115%;
+  color: #dedede;
+}
+
+.btnCloseBill{
+  pointer-events: visible;
+  opacity: 0.6;
+  cursor: default;
+}
+
+.btnCloseBill:hover{
+  pointer-events: auto;
+  opacity: 1;
+  cursor: pointer;
+}
+
+.btnCloseBill:hover .HeaderBtnLine2{
+  display: none;
+}
+
+.btnCloseBill:hover .HeaderBtnLine2hide{
+  display: inline-block;
+}
+
+.HeaderBtnIcon{
+  font-size: 250%;
+  opacity: 0.85;
 }
